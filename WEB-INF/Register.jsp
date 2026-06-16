@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,13 +20,19 @@
         <div class="user">
             <label  class="user-field"><b>Tên đăng nhập</b></label>
             <input type="text" class="form-control"  placeholder="">
-            <div class="password">
-                <label  class="password-field"><b>Mật khẩu</b></label>
-                <input type="text" class="form-control"  placeholder="">
         </div>
-            <div class="row-3">
-                <a href="Login.html"><button type="button" class="register_button"><b>Đăng ký</b></button></a>
-            </div>
+        <div class="password">
+            <label  class="password-field"><b>Mật khẩu</b></label>
+            <input type="text" class="form-control"  placeholder="">
+        </div>
+        <div class="confirm-password">
+            <label  class="confirm-password-field"><b>Xác nhận mật khẩu</b></label>
+            <input type="text" class="form-control"  placeholder="">
+        </div>
+    </div>
+    <div class="row-3">
+        <a href="Login.html"><button type="button" class="Register_button">Đăng ký</button></a>
+    </div>
 </div>
 </body>
 </html>
