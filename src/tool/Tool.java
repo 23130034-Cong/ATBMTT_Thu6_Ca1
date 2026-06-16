@@ -1,5 +1,11 @@
 package tool;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import java.security.MessageDigest;
+import java.util.Arrays;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -218,6 +224,19 @@ public class Tool extends JFrame {
 
 
 
+    }
+    public static byte[] encryptKeyWithPassword(String privateKeyPem, String password) throws Exception {
+        // Chuyển password thành key AES 256-bit (32 bytes)
+        byte[] key = password.getBytes("UTF-8");
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        key = sha.digest(key);
+        SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+        //  Khởi tạo Cipher (AES/CBC/PKCS5Padding)
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        //  Trong thực tế bạn nên tạo IV ngẫu nhiên và lưu cùng file
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        // Mã hóa
+        return cipher.doFinal(privateKeyPem.getBytes("UTF-8"));
     }
     public static void main(String[] args) {
         try {
