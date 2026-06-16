@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -27,18 +28,7 @@
     </aside>
 
     <main class="main-content">
-
-        <header class="main-header">
-            <h1>Tổng Quan</h1>
-            <div class="user-info">
-                <i class="fas fa-bell"></i>
-                <i class="fas fa-user-circle"></i>
-                <span>Admin</span>
-            </div>
-        </header>
-
-        <section class="stat-cards">
-
+        <section class="cards-section">
             <div class="card">
                 <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
                 <div class="card-details">
@@ -70,19 +60,8 @@
                     <p class="card-value">45,000</p>
                 </div>
             </div>
-
         </section>
-
-        <section class="charts-section">
-            <h2>Hoạt Động Gần Đây</h2>
-            <div class="placeholder">
-
-                <p>.</p>
-            </div>
-        </section>
-
     </main>
 </div>
-
 </body>
 </html>
