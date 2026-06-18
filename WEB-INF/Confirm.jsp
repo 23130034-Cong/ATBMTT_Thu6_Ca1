@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +10,14 @@
 </head>
 <body>
 <div class="container">
-    <div class="row-1"><b>Vui lòng nhập mã xác nhận</div>
+    <div class="row-1"><b>Vui lòng nhập mã xác nhận</b></div>
     <div class="row-2">
         <div class="Authentication_confirm_field">
             <input type="text" class="form-control"  placeholder="Nhập mã xác nhận">
         </div>
     </div>
     <div class="row-3">
-        <a href="CreateNewPassword.html" class="Change_password"><button type="button" class="Change_password_button"><b>Xác nhận
-        </button></a>
+        <a href="CreateNewPassword.html" class="Change_password"><button type="button" class="Change_password_button">Xác nhận</button></a>
     </div>
 </div>
 </body>
