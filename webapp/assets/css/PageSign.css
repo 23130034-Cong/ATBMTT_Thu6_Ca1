@@ -1,0 +1,92 @@
+body, button, input, textarea, select, label, h1, h5, h6 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+body {
+    background-color: #f4f6f9;
+}
+
+.modern-card {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden;
+}
+
+.rounded-4 {
+    border-radius: 6px !important;
+}
+
+.order-info-vault {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.signature-input-box {
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 14px;
+    color: #333333;
+}
+
+.signature-input-box:focus {
+    border-color: #003da5;
+    box-shadow: 0 0 0 0.2rem rgba(0, 61, 165, 0.25);
+}
+
+.btn-modern-primary {
+    background-color: #003da5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-modern-primary:hover {
+    background-color: #002566;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 61, 165, 0.2);
+}
+
+.btn {
+    border-radius: 4px !important;
+}
+
+.status-text-box {
+    display: none;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+.Trademark_logo {
+    display: block !important;
+    max-height: 80px !important;
+    width: auto !important;
+}
+
+.instruction-list li {
+    margin-bottom: 12px;
+    list-style-type: none;
+    position: relative;
+}
+
+.custom-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #e0e0e0;
+    color: #333333;
+    padding: 12px 24px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-size: 15px;
+    z-index: 9999;
+    display: none;
+    border: 1px solid #d0d0d0;
+}
