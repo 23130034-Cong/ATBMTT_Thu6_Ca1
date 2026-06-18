@@ -15,11 +15,27 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
         }
         
+
+    <title>Quản lý Cặp Khóa - Thiên Lý</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/Payment.css">
+    <style>
+        body, button, input, textarea, select, label, h1, h5, h6 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
         body {
             background-color: #f4f6f9;
         }
 
         /* Cấu trúc Khung Card */
+
+        header, nav, .navbar {
+            padding-top: 2px !important;
+            padding-bottom: 2px !important;
+            margin: 0 !important;
+            min-height: auto !important;
+        }
         .modern-card {
             background: #ffffff;
             border: 1px solid #dee2e6;
@@ -27,6 +43,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
             overflow: hidden;
         }
+
 
         .rounded-4 {
             border-radius: 6px !important;
@@ -55,6 +72,27 @@
         }
 
         /* Thành phần nút bấm chính màu xanh dương hệ thống */
+
+        /* Vùng hiển thị mã khóa */
+        .code-vault-box {
+            position: relative;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+        .key-display-area {
+            font-family: 'Courier New', Courier, monospace !important;
+            font-size: 14px;
+            background-color: transparent !important;
+            color: #333333 !important;
+            border: none !important;
+            resize: none;
+            box-shadow: none !important;
+            padding: 0;
+        }
+
+        /* Thành phần nút bấm */
         .btn-modern-primary {
             background-color: #003da5;
             color: white;
@@ -77,6 +115,11 @@
 
         /* Trạng thái xác thực */
         .status-text-box {
+
+        .btn {
+            border-radius: 4px !important;
+        }
+        .success-status-text {
             display: none;
             font-weight: 500;
             border-radius: 4px;
@@ -96,6 +139,7 @@
         }
 
         /* Thành phần thông báo Toast góc màn hình */
+
         .custom-toast {
             position: fixed;
             bottom: 20px;
@@ -109,6 +153,16 @@
             z-index: 9999;
             display: none;
             border: 1px solid #d0d0d0;
+        }
+
+        .text-warning-deep {
+            color: #d9a700 !important;
+            font-weight: 600 !important;
+        }
+        .Trademark_logo {
+            display: block !important;
+            max-height: 80px !important;
+            width: auto !important;
         }
     </style>
 </head>
@@ -145,6 +199,18 @@
                     <li>bước 1</li>
                     <li>bước 2</li>
                     <li>bước 3</li>
+
+            <div class="mb-4">
+                <h1 class="fw-bold h2 mb-2" style="color: #1e293b;">Cặp Khóa Bảo Mật</h1>
+                <p class="text-muted small">Khởi tạo và quản lý mật mã bảo mật để thực hiện niêm phong đơn hàng.</p>
+            </div>
+
+            <div class="alert bg-warning bg-opacity-10 border-0 p-4 mb-4 rounded-4 text-start">
+                <h6 class="text-warning-emphasis mb-3 fs-5">Thông tin lưu ý quan trọng về cặp khóa</h6>
+                <ul class="text-secondary small d-flex flex-column gap-2 mb-0" style="padding-left: 1rem;">
+                    <li><strong>Public key</strong> (khóa công khai) sẽ được lưu tự động trên hệ thống website.</li>
+                    <li><strong>Private key</strong> (khóa bí mật) dùng để ký trên Tool — <strong>website không lưu giữ</strong>.</li>
+                    <li>Bạn phải tự sao lưu và bảo mật private key. Nếu mất hoặc lộ, hãy <strong>báo mất khóa ngay lập tức</strong> để tránh bị kẻ gian giả mạo chữ ký.</li>
                 </ul>
             </div>
 
@@ -185,6 +251,34 @@
                         <textarea class="form-control signature-input-box" id="txtSignature" rows="4" placeholder="Chuỗi chữ ký điện tử tạo ra từ Tool của bạn..."></textarea>
                         <div class="mt-2 text-muted small">
                             Lưu ý: Hãy chắc chắn chuỗi chữ ký được sao chép chính xác từ Tool ký số.
+
+                
+                <div class="text-center pb-4 mb-4 border-bottom border-light">
+                    <button type="button" class="btn btn-modern-primary px-5" id="btnGenerateKeyPair">
+                        <i class="fas fa-cog fa-spin d-none me-2" id="iconLoading"></i>
+                        <i class="fas fa-key me-2" id="iconDefault"></i> Tạo Khóa Mới
+                    </button>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-12">
+                        <label class="form-label text-secondary small fw-bold uppercase">
+                            <i class="fas fa-unlock me-1"></i> Public Key
+                        </label>
+                        <div class="code-vault-box">
+                            <textarea class="form-control key-display-area" id="txtPublicKey" rows="2" placeholder="Nhấn nút phía trên để tự động tạo chuỗi khóa công khai..." readonly></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label text-secondary small fw-bold">
+                            <i class="fas fa-lock me-1"></i> Private Key
+                        </label>
+                        <div class="code-vault-box">
+                            <textarea class="form-control key-display-area text-white" id="txtPrivateKey" rows="5" placeholder="Nhấn nút phía trên để tự động tạo chuỗi khóa bí mật..." readonly></textarea>
+                        </div>
+                        <div class="mt-2 d-flex align-items-center text-warning-deep small">
+                            <i class="fas fa-exclamation-circle me-1"></i> Lưu ý: Hãy chắc chắn là bạn đã sao lưu khóa Private Key trước khi đến bước tiếp theo. Nếu mất khóa, hãy báo mất khóa để được hỗ trợ.
                         </div>
                     </div>
                 </div>
@@ -206,6 +300,30 @@
                 </button>
             </div>
             
+
+                <div class="row g-3 justify-content-center mt-4">
+                    <div class="col-6 col-md-4">
+                        <button type="button" class="btn btn-light w-100 fw-bold text-secondary border py-2 small" id="btnCopyPrivateKey">
+                            <i class="fas fa-copy me-2"></i> Sao chép khóa
+                        </button>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <button type="button" class="btn btn-success w-100 fw-bold py-2 small" id="btnSavePrivateKeyFile">
+                            <i class="fas fa-download me-2"></i> Tải về
+                        </button>
+                    </div>
+                </div>
+
+                <div class="alert alert-success text-center success-status-text mx-auto mt-4 mb-0 p-2 border-0 w-100" id="lblSuccessStatus">
+                    <i class="fas fa-check-circle me-1"></i> Đã lưu file thành công! Bạn có thể rời đi.
+                </div>
+            </div>
+
+            <div class="text-start">
+                <button type="button" class="btn btn-link text-decoration-none text-secondary p-0 fw-semibold" id="btnBackToOrder">
+                    <i class="fas fa-arrow-left me-1"></i> Quay lại trang ban đầu
+                </button>
+            </div>
         </div>
     </main>
 
@@ -213,5 +331,49 @@
         Đã sao chép vào bảng nhớ tạm
     </div>
 
+</body>
+</html>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+          
+             // Xử lý sự kiện tạo cặp khóa mới
+
+            // Xử lý sự kiện sao chép mã khóa vào bộ nhớ tạm
+            $('#btnCopyPrivateKey').click(function() {
+                var privateKeyText = $('#txtPrivateKey').val().trim();
+                if (privateKeyText === "") {
+                    alert("Không có nội dung để sao chép!");
+                    return;
+                }
+                var copyTextArea = document.getElementById("txtPrivateKey");
+                copyTextArea.select();
+                navigator.clipboard.writeText(copyTextArea.value);
+                $('#copyToast').fadeIn(200).delay(2000).fadeOut(200);
+            });
+
+            // Xử lý sự kiện xuất file khóa tải xuống máy
+            $('#btnSavePrivateKeyFile').click(function() {
+                var privateKeyContent = $('#txtPrivateKey').val().trim();
+                if (privateKeyContent === "") {
+                    alert("Vui lòng sinh khóa trước khi tải!");
+                    return;
+                }
+                var blob = new Blob([privateKeyContent], { type: "text/plain;charset=utf-8" });
+                var link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "private_key.key";
+                link.click();
+                $('#lblSuccessStatus').fadeIn();
+            });
+
+            // Xử lý sự kiện quay lại trang ban đầu
+            $('#btnBackToOrder').click(function() {
+                window.location.href = "Payment.html";
+            });
+        });
+    </script>
 </body>
 </html>
