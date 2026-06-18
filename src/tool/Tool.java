@@ -105,7 +105,6 @@ public class Tool extends JFrame {
         pnBctl.add(btnPasteKey);
         pnBctl.add(btnLoadFileKey);
         pnB.add(pnBctl, BorderLayout.SOUTH);
-
         //btn ký
         JPanel pnSignbtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton btnSign = new JButton("KÝ");
