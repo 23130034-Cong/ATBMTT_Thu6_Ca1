@@ -3,6 +3,10 @@ package tool;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.IvParameterSpec;
+import java.security.MessageDigest;
+import java.util.Arrays;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -17,6 +21,23 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
 import java.util.Base64;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -29,6 +50,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Tool extends JFrame {
     private CardLayout cardLayout;
     private JPanel pnHoldAllPage;
+
+    public Tool() {
+        setTitle("Tool Chũ Ký Điẹn Tử");
+        setSize(950,700);
+
     private JTextArea txtinputA;
     private JTextArea txtinputB;
     private JTextArea txtResult;
@@ -54,6 +80,8 @@ public class Tool extends JFrame {
         pnHoldAllPage = new JPanel(cardLayout);
 
         //Main
+        JPanel pageM = new JPanel(new BorderLayout(10,10));
+
         JPanel pageM = new JPanel(new BorderLayout(10, 10));
         JPanel pnMain = new JPanel();
         pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
@@ -62,11 +90,15 @@ public class Tool extends JFrame {
         //HASH
         JPanel pnA = new JPanel(new BorderLayout(5, 5));
         TitledBorder titledBorderA = BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Nhập Mã Băm Từ Wed",
+
                 BorderFactory.createEtchedBorder(), "Nhập Mã Băm Từ Web",
                 TitledBorder.LEFT, TitledBorder.TOP,
                 new Font("Segoe UI", Font.BOLD, 14));
         EmptyBorder marginBorder = new EmptyBorder(0, 15, 0, 15);
         pnA.setBorder(BorderFactory.createCompoundBorder(titledBorderA, marginBorder));
+
+        JTextArea txtinputA = new JTextArea(3,50);
 
         txtinputA = new JTextArea(3, 50);
         txtinputA.setLineWrap(true);
@@ -74,6 +106,22 @@ public class Tool extends JFrame {
         pnA.add(new JScrollPane(txtinputA), BorderLayout.CENTER);
 
         JPanel pnActl = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnLoadFileHash = new JButton("Nhập bằng file");
+        btnLoadFileHash.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnLoadFileHash.setPreferredSize(new Dimension(150, 35));
+
+        pnActl.add(btnLoadFileHash);
+        pnA.add(pnActl, BorderLayout.SOUTH);
+
+        //KEY
+        JPanel pnB = new JPanel(new BorderLayout(5,5) );
+        TitledBorder titledBorderB = BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Nhập Private Key",
+                TitledBorder.LEFT, TitledBorder.TOP,  new Font("Segoe UI", Font.BOLD, 14));
+        pnB.setBorder(BorderFactory.createCompoundBorder(titledBorderB, marginBorder));
+
+        JTextArea txtinputB = new JTextArea(3,50);
+
         JButton btnPasteHash = new JButton("Dán mã băm vào"); // Nút mới
         btnPasteHash.setFont(new Font("Segoe UI", Font.BOLD, 13));
         btnPasteHash.setPreferredSize(new Dimension(150, 35));
@@ -94,6 +142,7 @@ public class Tool extends JFrame {
         pnB.add(new JScrollPane(txtinputB), BorderLayout.CENTER);
 
         JPanel pnBctl = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         JButton btnPasteKey = new JButton("Dán private key"); // Nút mới
         btnPasteKey.setFont(new Font("Segoe UI", Font.BOLD, 13));
         btnPasteKey.setPreferredSize(new Dimension(150, 35));
@@ -102,6 +151,10 @@ public class Tool extends JFrame {
         btnLoadFileKey.setFont(new Font("Segoe UI", Font.BOLD, 13));
         btnLoadFileKey.setPreferredSize(new Dimension(150, 35));
 
+        pnBctl.add(btnLoadFileKey);
+        pnB.add(pnBctl, BorderLayout.SOUTH);
+
+
         pnBctl.add(btnPasteKey);
         pnBctl.add(btnLoadFileKey);
         pnB.add(pnBctl, BorderLayout.SOUTH);
@@ -109,6 +162,15 @@ public class Tool extends JFrame {
         JPanel pnSignbtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton btnSign = new JButton("KÝ");
         btnSign.setFont(new Font("Segoe UI", Font.BOLD, 16));
+
+        btnSign.setPreferredSize(new Dimension(150,45));
+
+        pnSignbtn.add(btnSign);
+
+
+        //KẾT QUẢ
+        JPanel pnC = new JPanel(new BorderLayout(5,5) );
+
         btnSign.setPreferredSize(new Dimension(150, 45));
         pnSignbtn.add(btnSign);
 
@@ -118,6 +180,8 @@ public class Tool extends JFrame {
                 BorderFactory.createEtchedBorder(), "Chữ Ký Điện Tử",
                 TitledBorder.LEFT, TitledBorder.TOP, new Font("Segoe UI", Font.BOLD, 14));
         pnC.setBorder(BorderFactory.createCompoundBorder(titledBorderC, marginBorder));
+
+        JTextArea txtResult = new JTextArea(3,50);
 
         txtResult = new JTextArea(3, 50);
         txtResult.setLineWrap(true);
@@ -142,6 +206,13 @@ public class Tool extends JFrame {
         pnMain.add(Box.createVerticalStrut(15));
         pnMain.add(pnC);
 
+
+        //hướng dẫn tạo chữ ký
+        JPanel pnHD = new JPanel();
+        pnHD.setLayout(new BoxLayout(pnHD, BoxLayout.Y_AXIS));
+        pnHD.setBorder(new EmptyBorder(15,0,15,15));
+        pnHD.setPreferredSize(new Dimension(300,700));
+
         //hướng dẫn tạo chữ ký
         JPanel pnHD = new JPanel();
         pnHD.setLayout(new BoxLayout(pnHD, BoxLayout.Y_AXIS));
@@ -161,6 +232,11 @@ public class Tool extends JFrame {
         txtHD.setBackground(getBackground());
         txtHD.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         txtHD.setText(
+                "CÁC BƯỚC THỰC HIỆN KÝ SỐ:\n\n"
+
+        );
+        pnH.add(new JScrollPane(txtHD),BorderLayout.CENTER);
+
                 "CÁC BƯỚC THỰC HIỆN KÝ SỐ\n\n" +
                         "Bước 1: Sao chép mã băm thông tin đơn hàng từ website hệ thống và dán vào ô 'Nhập Mã Băm Từ Web'.\n\n" +
                         "Bước 2: Nhập private key - khóa bí mật của bạn vào ô 'Nhập Private Key' (hoặc nhấn nút 'nhập bằng file' để tải file từ máy lên).\n\n" +
@@ -189,6 +265,8 @@ public class Tool extends JFrame {
         txtHelpInfo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         txtHelpInfo.setText(
                 "TRỢ GIÚP & LIÊN HỆ\n\n" +
+                        "Nếu bạn gặp khó khăn trong quá trình sử dụng hệ thống ký số, vui lòng liên hệ qua:\n\n" +
+
                         "Nếu bạn gặp khó khăn trong quá trình sử dụng hệ thống ký số, vui lòng liên hệ cho chúng tôi qua:\n\n" +
                         "- Website:  \n" +
                         "- Email:   \n" +
@@ -204,6 +282,11 @@ public class Tool extends JFrame {
 
         pnHoldAllPage.add(pageM, "TrangKySo");
         pnHoldAllPage.add(pageH, "TrangTroGiup");
+
+
+        setLayout(new BorderLayout());
+        add(pnHoldAllPage, BorderLayout.CENTER);
+
 
         setLayout(new BorderLayout());
         add(pnHoldAllPage, BorderLayout.CENTER);
@@ -222,6 +305,12 @@ public class Tool extends JFrame {
                 cardLayout.show(pnHoldAllPage, "TrangTroGiup");
             }
         });
+
+
+
+    }
+    public static byte[] encryptKeyWithPassword(String privateKeyPem, String password) throws Exception {
+        // Chuyển password thành key AES 256-bit (32 bytes)
 
         //DÁN MÃ BĂM
         btnPasteHash.addActionListener(new ActionListener() {
@@ -289,6 +378,14 @@ public class Tool extends JFrame {
         MessageDigest sha = MessageDigest.getInstance("SHA-256");
         key = sha.digest(key);
         SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+        //  Khởi tạo Cipher (AES/CBC/PKCS5Padding)
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        //  Trong thực tế bạn nên tạo IV ngẫu nhiên và lưu cùng file
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        // Mã hóa
+        return cipher.doFinal(privateKeyPem.getBytes("UTF-8"));
+    }
+
 
         byte[] ivBytes = new byte[16];
         System.arraycopy(key, 0, ivBytes, 0, 16);
@@ -349,4 +446,7 @@ public class Tool extends JFrame {
             }
         });
     }
+
+
+
 }
